@@ -1,0 +1,14 @@
+[Unit]
+Description=Redis Server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/redis_6379.pid
+ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
+ExecStop=/usr/local/redis/bin/redis-cli -h 0.0.0.0 -p 6379 shutdown
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
